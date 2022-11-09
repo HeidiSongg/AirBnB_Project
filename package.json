@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HeidiSongg/API_Project.git"
+    "url": "git+https://github.com/HeidiSongg/AirBnB_Project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HeidiSongg/API_Project/issues"
+    "url": "https://github.com/HeidiSongg/AirBnB_Project/issues"
   },
-  "homepage": "https://github.com/HeidiSongg/API_Project#readme"
+  "homepage": "https://github.com/HeidiSongg/AirBnB_Project#readme"
 }

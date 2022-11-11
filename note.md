@@ -1,0 +1,1 @@
+npx sequelize model:generate --name Spot --attributes ownerId:integer

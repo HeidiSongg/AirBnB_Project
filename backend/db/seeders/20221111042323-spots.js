@@ -3,16 +3,15 @@ const { Spot } = require('../models');
 
 const spots = [
   {
-      address: "123 Disney Lane",
+      address: "123 GoldenGate Lane",
       city: "San Francisco",
       state: "California",
       country: "United States of America",
-      lat: 37.7645358,
-      lng: -122.4730327,
-      name: "App Academy",
-      description: "Place where web developers are created",
-      price: 123,
-      avgRating: 4.5,
+      lat: 39.7645358,
+      lng: -120.4730327,
+      name: "Guest Suite in San Francisco",
+      description: "Convenient location and reasonable price",
+      price: 80,
       previewImage: "image url",
       ownerId: 1
   },
@@ -26,7 +25,6 @@ const spots = [
     name: "Cliff House",
     description: "Big Sur Coast and Stunning Ocean Views",
     price: 520,
-    avgRating: 4.7,
     previewImage: "image url",
     ownerId: 1
   },
@@ -40,7 +38,6 @@ const spots = [
     name: "Luxury APT",
     description: "luxurious flat located in a prestigious residence with security and swimming pool",
     price: 1612,
-    avgRating: 4.2,
     previewImage: "image url",
     ownerId: 2
   },
@@ -54,7 +51,6 @@ const spots = [
     name: "Private Hanok",
     description: "You can spend a special day in a cleanly remodeled hanok full of Korean cool",
     price: 174,
-    avgRating: 4.6,
     previewImage: "image url",
     ownerId: 3
   }

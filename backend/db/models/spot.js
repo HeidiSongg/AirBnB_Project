@@ -57,11 +57,10 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
       validate: {
-        type: [1, 500]
+        len: [1, 500]
       }
     },
-    price: DataTypes.DECIMAL,
-    avgRating:  DataTypes.DECIMAL,
+    price: DataTypes.INTEGER,
     previewImage: DataTypes.STRING,
     ownerId: {
       type: DataTypes.INTEGER,

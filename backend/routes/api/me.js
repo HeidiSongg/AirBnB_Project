@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth')
-const { User, Spot } = require('../../db/models')
+const { User, Spot, Review, ReviewImage } = require('../../db/models')
 
 router.get('/spots', requireAuth, async (req, res) => {
 
@@ -11,6 +11,27 @@ router.get('/spots', requireAuth, async (req, res) => {
         }
     })
     res.json({"Spots" : spots})
+})
+
+router.get('/reviews', requireAuth, async (req, res) => {
+
+    const reviews = await Review.findAll({
+        where: {
+            userId : req.user.id
+        },
+        include : [
+            {
+                model: User
+            },
+            {
+                model: Spot
+            },
+            {
+                model: ReviewImage
+            }
+    ]
+    })
+    res.json({"Reviews" : reviews})
 })
 
 module.exports = router;

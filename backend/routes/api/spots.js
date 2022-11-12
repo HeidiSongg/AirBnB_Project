@@ -87,5 +87,25 @@ router.post('/',requireAuth, async (req, res) => {
     }
   })
 
+ router.delete("/:spotId", requireAuth, async(req,res) =>{
+    const spotId = req.params.spotId;
+
+    const deleteItem = await Spot.findByPk(spotId);
+  
+    if (deleteItem) {
+      await deleteItem.destroy()
+      res.json({
+        "message": "Successfully deleted",
+        "statusCode": "200"
+      })
+    } else {
+      res.status(404);
+      res.json({
+        "message": "Spot couldn't be found",
+        "statusCode" : "404"
+      })
+    }
+  })
+
 
 module.exports = router;

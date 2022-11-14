@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const { Spot, SpotImage, User } = require('../../db/models')
+const { Spot, SpotImage, User, Review, ReviewImage } = require('../../db/models')
 const { requireAuth } = require("../../utils/auth")
 
 router.get('/', async (req,res) => {
@@ -106,6 +106,53 @@ router.post('/',requireAuth, async (req, res) => {
       })
     }
   })
+
+// Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req,res) => {
+    const spotId = req.params.spotId;
+
+    const review = await Review.findAll({
+        where : {
+        spotId : spotId
+      },
+      include: [
+        {
+            model: User
+        },
+        {
+            model: ReviewImage
+        }
+    ]
+    })
+
+    if (review) {
+        res.json({"Reviews" : review});    
+    } else {
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode" : "404"
+          })
+    }
+})
+
+//Create a review for a spot based on the spot's id
+router.post('/:spotId/reviews',requireAuth, async (req, res) => {
+
+    const spotId = req.params.spotId;
+    const { review, stars } = req.body;
+
+    const spot = await Spot.findByPk(spotId)
+
+    const newReview= await Review.create({
+        review,
+        stars,
+        spotId: spot.id,
+        userId: req.user.id
+      })
+  
+      return res.json(newReview)
+  })
+
 
 
 module.exports = router;

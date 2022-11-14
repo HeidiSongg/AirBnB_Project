@@ -34,6 +34,7 @@ router.get('/reviews', requireAuth, async (req, res) => {
     res.json({"Reviews" : reviews})
 })
 
+//Get all of the Current User's Bookings
 router.get('/bookings', requireAuth, async (req, res) => {
 
     const reviews = await Booking.findAll({

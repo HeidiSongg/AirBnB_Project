@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const { Spot, SpotImage, User, Review, ReviewImage } = require('../../db/models')
+const { Spot, SpotImage, User, Review, ReviewImage, Booking } = require('../../db/models')
 const { requireAuth } = require("../../utils/auth")
 
 router.get('/', async (req,res) => {
@@ -153,6 +153,47 @@ router.post('/:spotId/reviews',requireAuth, async (req, res) => {
       return res.json(newReview)
   })
 
+// Get all Bookings by a Spot's id
+router.get('/:spotId/bookings', async (req,res) => {
+    const spotId = req.params.spotId;
 
+    const booking = await Booking.findAll({
+        where : {
+        spotId : spotId
+      },
+      include: [
+        {
+            model: User
+        }
+    ]
+    })
+
+    if (booking) {
+        res.json({"Bookings" : booking});    
+    } else {
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode" : "404"
+          })
+    }
+})
+
+//Create a booking from a spot based on the spot's id
+router.post('/:spotId/bookings',requireAuth, async (req, res) => {
+
+    const spotId = req.params.spotId;
+    const { startDate, endDate } = req.body;
+
+    const spot = await Spot.findByPk(spotId)
+
+    const newBooking= await Booking.create({
+        startDate,
+        endDate,
+        spotId: spot.id,
+        userId: req.user.id
+      })
+  
+      return res.json(newBooking)
+  })
 
 module.exports = router;

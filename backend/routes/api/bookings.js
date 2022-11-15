@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router();
 
 const { requireAuth } = require("../../utils/auth")
+const newError = require('../../utils/newError.js');
 const { User, Booking,Review, ReviewImage } = require('../../db/models')
 
 //Edit a Booking
-router.put('/:bookingId',requireAuth, async (req, res) => {
+router.put('/:bookingId',requireAuth, async (req, res, next) => {
 
     const bookingId = req.params.bookingId;
     const { startDate, endDate } = req.body;
@@ -16,17 +17,17 @@ router.put('/:bookingId',requireAuth, async (req, res) => {
         startDate,
         endDate
       });
-      res.json(updateBooking)
+      return res.json(updateBooking)
     } else {
-      res.status(404);
-      res.json({
-        "message": "Booking couldn't be found"
-      })
+      const err = newError(404, "Booking couldn't be found",[
+        "Booking couldn't be found"
+    ]);
+    next(err);
     }
   })
 
 //Delete a booking
-router.delete("/:bookingId", requireAuth, async(req,res) =>{
+router.delete("/:bookingId", requireAuth, async(req, res, next) =>{
   const bookingId = req.params.bookingId;
 
   const deleteItem = await Booking.findByPk(bookingId);
@@ -38,11 +39,10 @@ router.delete("/:bookingId", requireAuth, async(req,res) =>{
       "statusCode": "200"
     })
   } else {
-    res.status(404);
-    res.json({
-      "message": "Booking couldn't be found",
-      "statusCode" : "404"
-    })
+    const err = newError(404, "Booking couldn't be found",[
+      "Booking couldn't be found"
+  ]);
+  next(err);
   }
 })  
 

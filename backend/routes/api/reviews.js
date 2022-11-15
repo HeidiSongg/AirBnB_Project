@@ -2,16 +2,25 @@ const express = require('express')
 const router = express.Router();
 
 const { requireAuth } = require("../../utils/auth")
+const newError = require('../../utils/newError.js');
 const { User, Review, ReviewImage } = require('../../db/models')
 
 
 //Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images',requireAuth, async (req, res) => {
+router.post('/:reviewId/images',requireAuth, async (req, res, next) => {
 
     const reviewId = req.params.reviewId;
     const { url } = req.body;
 
     const review = await Review.findByPk(reviewId)
+
+    if(!review) {
+        const err = newError(404, "Review couldn't be found",[
+            "Review couldn't be found"
+        ]);
+        next(err);
+      }
+
 
     const newReview= await ReviewImage.create({
         url,
@@ -22,11 +31,13 @@ router.post('/:reviewId/images',requireAuth, async (req, res) => {
   })
 
 //Edit a Review
-router.put('/:reviewId',requireAuth, async (req, res) => {
+router.put('/:reviewId',requireAuth, async (req, res, next) => {
 
-    const reviewId = req.params.reviewId;
+    const reviewId = req.params.reviewId;    
+
     const { review, stars } = req.body;
     const updateReview = await Review.findByPk(reviewId)
+
      if (updateReview) {
       await updateReview.update({
         review,
@@ -34,15 +45,15 @@ router.put('/:reviewId',requireAuth, async (req, res) => {
       });
       res.json(updateReview)
     } else {
-      res.status(404);
-      res.json({
-        "message": "Review couldn't be found"
-      })
+        const err = newError(404, "Review couldn't be found",[
+            "Review couldn't be found"
+        ]);
+        next(err);
     }
   })
 
 //Delete a review
-  router.delete("/:reviewId", requireAuth, async(req,res) =>{
+  router.delete("/:reviewId", requireAuth, async(req, res, next) =>{
     const reviewId = req.params.reviewId;
 
     const deleteItem = await Review.findByPk(reviewId);
@@ -54,11 +65,10 @@ router.put('/:reviewId',requireAuth, async (req, res) => {
         "statusCode": "200"
       })
     } else {
-      res.status(404);
-      res.json({
-        "message": "Review couldn't be found",
-        "statusCode" : "404"
-      })
+        const err = newError(404, "Review couldn't be found",[
+            "Review couldn't be found"
+        ]);
+        next(err);
     }
   })
 

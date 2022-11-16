@@ -22,7 +22,7 @@ router.put('/:bookingId',requireAuth, async (req, res, next) => {
       const err = newError(404, "Booking couldn't be found",[
         "Booking couldn't be found"
     ]);
-    next(err);
+    return next(err);
     }
   })
 
@@ -42,7 +42,7 @@ router.delete("/:bookingId", requireAuth, async(req, res, next) =>{
     const err = newError(404, "Booking couldn't be found",[
       "Booking couldn't be found"
   ]);
-  next(err);
+  return next(err);
   }
 })  
 

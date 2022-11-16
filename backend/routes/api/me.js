@@ -10,7 +10,7 @@ router.get('/spots', requireAuth, async (req, res) => {
             ownerId : req.user.id
         }
     })
-    res.json({"Spots" : spots})
+    return res.json({"Spots" : spots})
 })
 
 router.get('/reviews', requireAuth, async (req, res) => {
@@ -31,7 +31,7 @@ router.get('/reviews', requireAuth, async (req, res) => {
             }
     ]
     })
-    res.json({"Reviews" : reviews})
+    return res.json({"Reviews" : reviews})
 })
 
 //Get all of the Current User's Bookings
@@ -47,7 +47,7 @@ router.get('/bookings', requireAuth, async (req, res) => {
             }
     ]
     })
-    res.json({"Bookings" : reviews})
+    return res.json({"Bookings" : reviews})
 })
 
 module.exports = router;

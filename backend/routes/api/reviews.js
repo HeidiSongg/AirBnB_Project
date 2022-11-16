@@ -18,7 +18,7 @@ router.post('/:reviewId/images',requireAuth, async (req, res, next) => {
         const err = newError(404, "Review couldn't be found",[
             "Review couldn't be found"
         ]);
-        next(err);
+        return next(err);
       }
 
 
@@ -43,12 +43,12 @@ router.put('/:reviewId',requireAuth, async (req, res, next) => {
         review,
         stars
       });
-      res.json(updateReview)
+      return res.json(updateReview)
     } else {
         const err = newError(404, "Review couldn't be found",[
             "Review couldn't be found"
         ]);
-        next(err);
+        return next(err);
     }
   })
 
@@ -60,7 +60,7 @@ router.put('/:reviewId',requireAuth, async (req, res, next) => {
   
     if (deleteItem) {
       await deleteItem.destroy()
-      res.json({
+      return res.json({
         "message": "Successfully deleted",
         "statusCode": "200"
       })
@@ -68,7 +68,7 @@ router.put('/:reviewId',requireAuth, async (req, res, next) => {
         const err = newError(404, "Review couldn't be found",[
             "Review couldn't be found"
         ]);
-        next(err);
+        return next(err);
     }
   })
 

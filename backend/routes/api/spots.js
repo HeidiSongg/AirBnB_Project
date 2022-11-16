@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router();
+const { Op } = require('sequelize');
 
 const { Spot, SpotImage, User, Review, ReviewImage, Booking } = require('../../db/models')
 const { requireAuth } = require("../../utils/auth")
@@ -45,7 +46,7 @@ router.get('/:spotId', async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
     }
 })
 
@@ -81,7 +82,7 @@ router.post('/:spotId/images',requireAuth, async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
       }
 
     const newImage= await SpotImage.create({
@@ -116,7 +117,7 @@ router.put('/:spotId',requireAuth, async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
     }
   })
 
@@ -136,7 +137,7 @@ router.delete("/:spotId", requireAuth, async(req, res, next) =>{
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
     }
   })
 
@@ -150,7 +151,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
       }
 
     const review = await Review.findAll({
@@ -184,7 +185,7 @@ router.post('/:spotId/reviews',requireAuth, async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
       }
 
     const existinguserReview = await Review.findOne({ where: {userId: req.user.id}});  
@@ -193,7 +194,7 @@ router.post('/:spotId/reviews',requireAuth, async (req, res, next) => {
         const err = newError(403, "User already has a review for this spot",[
             "User already has a review for this spot"
         ]);
-        next(err);
+        return next(err);
       }
     
     const newReview= await Review.create({
@@ -215,7 +216,7 @@ router.get('/:spotId/bookings', async (req, res, next) => {
         const err = newError(404, "Spot couldn't be found",[
             "Spot couldn't be found"
         ]);
-        next(err);
+        return next(err);
       }
 
     const booking = await Booking.findAll({
@@ -240,12 +241,48 @@ router.get('/:spotId/bookings', async (req, res, next) => {
 })
 
 //Create a booking from a spot based on the spot's id
-router.post('/:spotId/bookings',requireAuth, async (req, res) => {
+router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
 
     const spotId = req.params.spotId;
     const { startDate, endDate } = req.body;
 
     const spot = await Spot.findByPk(spotId)
+
+    if(spot.ownerId === req.user.id) {
+        const err = newError(403, "You can't book the spot your own",[
+            "You can't book the spot you own"
+        ]);
+        return next(err);
+    }
+
+    if(!spot) {
+        const err = newError(404, "Spot couldn't be found",[
+            "Spot couldn't be found"
+        ]);
+        return next(err);
+      }
+    const startDateObj = new Date(startDate)
+    const endDateObj = new Date(endDate)
+
+    const existingBooking = await Booking.findOne({
+        where: {
+            [Op.or]: [
+              { startDate: { [Op.between]: [startDateObj, endDateObj] } },
+              { endDate: { [Op.between]: [startDateObj, endDateObj] } },
+              { [Op.and]: {
+                startDate: {[Op.lt]: startDateObj},
+                endDate: { [Op.gt]: startDateObj}
+              }}
+            ],
+          },
+    });
+
+    if (existingBooking){
+        const err = newError(403, 'Sorry, this spot is already booked for the specified dates',[
+          'Start date conflicts with an existing booking'
+        ]);
+        return next(err);
+      }  
 
     const newBooking= await Booking.create({
         startDate,

@@ -291,6 +291,13 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
 
     const spot = await Spot.findByPk(spotId)
 
+    if(!spot) {
+        const err = newError(404, "Spot couldn't be found",[
+            "Spot couldn't be found"
+        ]);
+        return next(err);
+      }
+
     if(spot.ownerId === req.user.id) {
         const err = newError(403, "You can't book the spot your own",[
             "You can't book the spot you own"
@@ -298,12 +305,6 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
         return next(err);
     }
 
-    if(!spot) {
-        const err = newError(404, "Spot couldn't be found",[
-            "Spot couldn't be found"
-        ]);
-        return next(err);
-      }
     const startDateObj = new Date(startDate)
     const endDateObj = new Date(endDate)
 

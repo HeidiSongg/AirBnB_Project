@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
     
     if (Number.isNaN(page) || page < 0) page = 0;
     if (Number.isNaN(size) || size < 0) size = 0;
+
     if (page > 10) page = 10;
     if (size > 20) size = 20;
 
@@ -47,11 +48,16 @@ router.get('/', async (req, res) => {
       if (maxPrice) {
         where['price'] = { [Op.lte]: maxPrice };
       }
-
+    
+      const pagination = {};
+      if ( page >= 1 && size>= 1){
+          pagination.limit = size;
+          pagination.offset = size * (page - 1);
+      };   
+      
     const spots = await Spot.findAll({
         where,
-        limit: size,
-        offset: (page - 1) * size
+        ...pagination
       }
     );
     res.json({"Spots" : spots, page, size})

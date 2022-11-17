@@ -21,8 +21,10 @@ router.get('/', async (req, res) => {
     
     page = parseInt(page);
     size = parseInt(size);
-
-    if (page > 20) page = 20;
+    
+    if (Number.isNaN(page) || page < 0) page = 0;
+    if (Number.isNaN(size) || size < 0) size = 0;
+    if (page > 10) page = 10;
     if (size > 20) size = 20;
 
     const where = {};

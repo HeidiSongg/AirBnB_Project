@@ -294,4 +294,26 @@ router.post('/:spotId/bookings',requireAuth, async (req, res, next) => {
       return res.json(newBooking)
   })
 
+//Delete spot image
+router.delete("/:spotId/images", requireAuth, async(req, res, next) =>{
+    const spotId = req.params.spotId;
+
+    const deleteItem = await SpotImage.findOne({
+        where: {spotId : spotId}
+        });
+  
+    if (deleteItem) {
+      await deleteItem.destroy({ where: { spotId: [spotId] }})
+      res.json({
+        "message": "Successfully deleted",
+        "statusCode": "200"
+      })
+    } else {
+        const err = newError(404, "Spot Image couldn't be found",[
+            "Spot couldn't be found"
+        ]);
+        return next(err);
+    }
+  })  
+  
 module.exports = router;

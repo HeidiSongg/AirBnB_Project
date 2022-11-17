@@ -72,4 +72,26 @@ router.put('/:reviewId',requireAuth, async (req, res, next) => {
     }
   })
 
+//Delete a review image
+router.delete("/:reviewId/images", requireAuth, async(req, res, next) =>{
+  const reviewId = req.params.reviewId;
+
+  const deleteItem = await ReviewImage.findOne({
+      where: {reviewId : reviewId}
+      });
+
+  if (deleteItem) {
+    await deleteItem.destroy()
+    res.json({
+      "message": "Successfully deleted",
+      "statusCode": "200"
+    })
+  } else {
+      const err = newError(404, "Review Image couldn't be found",[
+          "Review couldn't be found"
+      ]);
+      return next(err);
+  }
+})    
+
 module.exports = router;

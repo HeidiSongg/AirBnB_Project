@@ -7,9 +7,52 @@ const { requireAuth } = require("../../utils/auth")
 
 const newError = require('../../utils/newError.js');
 
-router.get('/', async (req,res) => {
-    const spots = await Spot.findAll();
-    res.json({"Spots" : spots})
+router.get('/', async (req, res) => {
+    let {
+        page = 0,
+        size = 20,
+        maxLat,
+        minLat,
+        minLng,
+        maxLng,
+        minPrice,
+        maxPrice
+      } = req.query;
+    
+    page = parseInt(page);
+    size = parseInt(size);
+
+    if (page > 20) page = 20;
+    if (size > 20) size = 20;
+
+    const where = {};
+
+    if (maxLat) {
+        where['lat'] = { [Op.lte]: maxLat };
+      }
+      if (minLat) {
+        where['lat'] = { [Op.gte]: minLat };
+      }
+      if (maxLng) {
+        where['lng'] = { [Op.lte]: maxLng };
+      }
+      if (minLng) {
+        where['lng'] = { [Op.gte]: minLng };
+      }
+      if (minPrice) {
+        where['price'] = { [Op.gte]: minPrice };
+      }
+      if (maxPrice) {
+        where['price'] = { [Op.lte]: maxPrice };
+      }
+
+    const spots = await Spot.findAll({
+        where,
+        limit: size,
+        offset: (page - 1) * size
+      }
+    );
+    res.json({"Spots" : spots, page, size})
 })
 
 //Get details of a Spot from an id

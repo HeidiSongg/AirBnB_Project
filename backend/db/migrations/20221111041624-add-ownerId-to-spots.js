@@ -1,5 +1,12 @@
 'use strict';
 
+let options = {};
+options.tableName = 'Spots'; // define your table name in options object
+
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
@@ -8,7 +15,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-     await queryInterface.addColumn(
+     await queryInterface.addColumn(options,
       'Spots', 
       'ownerId',
       {
@@ -27,6 +34,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-     await queryInterface.removeColumn('Spots', 'ownerId');
+     await queryInterface.removeColumn(options, 'Spots', 'ownerId');
   }
 };

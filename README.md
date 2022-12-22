@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /me
+  * URL: /session
   * Body: none
 
 * Successful Response
@@ -63,11 +63,14 @@ Returns the information about the current user that is logged in.
 
     ```json
     {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith"
+      "user" : {
+        "firstName": "John",
+        "lastName": "Smith",
+        "id": 1,
+        "username": "JohnSmith",
+        "email": "john.smith@gmail.com",
+      }
+      "token" :
     }
     ```
 
@@ -102,8 +105,10 @@ information.
       "id": 1,
       "firstName": "John",
       "lastName": "Smith",
-      "email": "john.smith@gmail.com",
       "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "createdAt": "2022-11-12T18:07:51.000Z",
+      "updatedAt": "2022-11-12T18:07:51.000Z",
       "token": ""
     }
     ```
@@ -116,8 +121,13 @@ information.
 
     ```json
     {
+      "title": "Server Error",
       "message": "Invalid credentials",
-      "statusCode": 401
+      "status": 401,
+      "errors": [
+          "Invalid credentials"
+      ],
+      "stack": 
     }
     ```
 
@@ -129,12 +139,15 @@ information.
 
     ```json
     {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }
+    "title": "Bad request.",
+    "message": "Bad request.",
+    "status": 400,
+    "errors": [
+        "Invalid value",
+        "Please provide a valid email or username.",
+        "Please provide a password."
+    ],
+    "stack": 
     }
     ```
 
@@ -172,8 +185,10 @@ user's information.
       "id": 1,
       "firstName": "John",
       "lastName": "Smith",
-      "email": "john.smith@gmail.com",
       "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "createdAt": "2022-11-12T18:32:49.802Z",
+      "updatedAt": "2022-11-12T18:32:49.802Z",
       "token": ""
     }
     ```
@@ -186,11 +201,13 @@ user's information.
 
     ```json
     {
+      "title": "Server Error",
       "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "email": "User with that email already exists"
-      }
+      "status": 403,
+      "errors": [
+        "User with that email already exists"
+    ],
+      "stack": 
     }
     ```
 
@@ -202,11 +219,13 @@ user's information.
 
     ```json
     {
+      "title": "Server Error",
       "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "username": "User with that username already exists"
-      }
+      "status": 403,
+      "errors": [
+        "User with that username already exists"
+      ],
+      "stack": 
     }
     ```
 
@@ -218,14 +237,18 @@ user's information.
 
     ```json
     {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "email": "Invalid email",
-        "username": "Username is required",
-        "firstName": "First Name is required",
-        "lastName": "Last Name is required"
-      }
+      "title": "Bad request.",
+      "message": "Bad request.",
+      "status": 400,
+      "errors": [
+        "Invalid value",
+        "Please provide a valid email.",
+        "Invalid value",
+        "Please provide a username with at least 4 characters.",
+        "Invalid value",
+        "Password must be 6 characters or more."
+      ],
+      "stack": null
     }
     ```
 

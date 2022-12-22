@@ -1,6 +1,9 @@
 'use strict';
 const { Spot } = require('../models');
-
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
 const spots = [
   {
       address: "123 GoldenGate Lane",
@@ -62,6 +65,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.bulkDelete('Spots', null, {});
+    options.tableName = 'Spots'
+     await queryInterface.bulkDelete(options, null, {});
   }
 };

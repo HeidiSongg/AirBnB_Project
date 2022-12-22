@@ -1,5 +1,10 @@
 'use strict';
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 const { SpotImage } = require('../models');
 
 const spotimages = [
@@ -19,6 +24,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SpotImages', null, {});
+    options.tableName = 'SpotImages'
+    await queryInterface.bulkDelete(options, null, {});
   }
 };

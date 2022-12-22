@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/HeidiSongg/AirBnB_Project/issues"
   },
-  "homepage": "https://github.com/HeidiSongg/AirBnB_Project#readme"
+  "homepage": "https://github.com/HeidiSongg/AirBnB_Project#readme",
+  "dependencies": {
+    "pg": "^8.8.0"
+  }
 }

@@ -55,13 +55,13 @@ router.get(
     restoreUser,
     (req, res) => {
       const { user } = req;
-      const token = setTokenCookie(res, user);
       if (user) {
+        const token = setTokenCookie(res, user);
         return res.json({
           user: user.toSafeObject(),
           token
         });
-      } else return res.json({ user: null });
+      } else return res.json({ user: {} });
     }
   ); 
 

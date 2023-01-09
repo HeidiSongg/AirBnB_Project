@@ -1,0 +1,6 @@
+.navbar_user {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    border-radius: 4px;
+  }

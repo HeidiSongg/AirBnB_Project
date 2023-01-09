@@ -44,6 +44,15 @@ const SpotForm = () => {
         }
         
         dispatch(postSpot(payload))
+        .then(()=> setAddress(''))
+        .then(()=> setCity(''))
+        .then(()=> setState(''))
+        .then(()=> setCountry(''))
+        .then(()=> setLat(''))
+        .then(()=> setLng(''))
+        .then(()=> setName(''))
+        .then(()=> setDescription(''))
+        .then(()=> setPrice(''))
     }
 
     return sessionUser.id ? (

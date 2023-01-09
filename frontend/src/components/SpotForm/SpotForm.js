@@ -54,6 +54,7 @@ const SpotForm = () => {
                 <input
                     type = "text"
                     value = {address}
+                    required
                     onChange={updateAddress}
                  /> 
                 </div>
@@ -62,6 +63,7 @@ const SpotForm = () => {
                 <input
                     type = "text"
                     value = {city}
+                    required
                     onChange={updateCity}
                  /> 
                 </div>
@@ -70,6 +72,7 @@ const SpotForm = () => {
                  <input
                     type = "text"
                     value = {state}
+                    required
                     onChange={updateState}
                  />
                 </div>
@@ -78,6 +81,7 @@ const SpotForm = () => {
                 <input
                     type = "text"
                     value = {country}
+                    required
                     onChange={updateCountry}
                  />
 
@@ -87,6 +91,7 @@ const SpotForm = () => {
                 <input
                     type = "number"
                     value = {lat}
+                    required
                     onChange={updateLat}
                  />
                 </div>
@@ -95,6 +100,7 @@ const SpotForm = () => {
                 <input
                     type = "number"
                     value = {lng}
+                    required
                     onChange={updateLng}
                  />
                 </div>
@@ -103,6 +109,7 @@ const SpotForm = () => {
                 <input
                     type = "text"
                     value = {name}
+                    required
                     onChange={updateName}
                  />
                 </div>
@@ -111,6 +118,7 @@ const SpotForm = () => {
                 <input
                     type = "text"
                     value = {description}
+                    required
                     onChange={updateDescription}
                  />
                 </div>
@@ -119,6 +127,7 @@ const SpotForm = () => {
                 <input
                     type = "number"
                     value = {price}
+                    required
                     onChange={updatePrice}
                  />                           
                 </div> 

@@ -7,6 +7,11 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotsList from "./components/SpotsList/SpotsList";
 import SpotForm from "./components/SpotForm/SpotForm";
+import SpotDetail from "./components/SpotDetail/SpotDetail";
+import EditSpotForm from "./components/EditSpotForm/EditSpotForm"
+import ReviewForm from "./components/ReviewForm/ReviewForm";
+import ReviewsList from "./components/ReviewsList/ReviewsList";
+import ReviewDetail from "./components/ReviewDetails/ReviewDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,9 +31,22 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path ='/spots'>
+          <Route exact path ='/spots/:spotId'>
+            <SpotDetail />
+          </Route>
+          <Route exact path="/spots/:spotId/edit">
+            <EditSpotForm />
+          </Route>
+          <Route exact path ='/spots'>
             <SpotForm />
             <SpotsList />
+          </Route>
+          <Route exact path ='/spots/:spotId/reviews'>
+            <ReviewsList />
+            <ReviewForm />
+          </Route>
+          <Route exact path ='/reviews'>
+            <ReviewDetail />
           </Route>
         </Switch>
       )}

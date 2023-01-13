@@ -17,6 +17,9 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink to="/spots">Spots</NavLink>
       </li>
+      <li>
+        <NavLink to="/reviews">Reviews</NavLink>
+      </li>
       </>
     );
   } else {

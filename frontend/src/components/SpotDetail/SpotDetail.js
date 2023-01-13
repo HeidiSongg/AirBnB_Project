@@ -1,7 +1,7 @@
 import './SpotDetail.css';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 import { loadSingleSpot, deleteSpot, changeSpot } from "../../store/spots"
 
 const SpotDetail = () => {
@@ -12,16 +12,19 @@ const SpotDetail = () => {
     const { spotId } = useParams();
 
     const spot = useSelector(state => state.spots[spotId]);
-    const isOwner = sessionUser.id === spot.ownerId;
     
     const deleteHandler = () => {
         dispatch(deleteSpot(spot.id))
     }
-
+    
     useEffect(() => {
         dispatch(loadSingleSpot(spotId))
             .then(res => setIsLoaded(true));
     }, [dispatch]);
+
+
+    if (!spot && isLoaded) return <Redirect to='/spots' />
+    const isOwner = sessionUser.id === spot.ownerId;
 
     return (
         isLoaded && (

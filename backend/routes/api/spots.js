@@ -4,8 +4,10 @@ const { Op } = require('sequelize');
 
 const { Spot, SpotImage, User, Review, ReviewImage, Booking } = require('../../db/models')
 const { requireAuth } = require("../../utils/auth")
+const { handleValidationErrors } = require("../../utils/validation")
 
 const newError = require('../../utils/newError.js');
+
 
 router.get('/', async (req, res) => {
     let {
@@ -247,6 +249,13 @@ router.post('/:spotId/reviews',requireAuth, async (req, res, next) => {
         ]);
         return next(err);
       }
+    
+    if(req.user.id === spot.ownerId){
+      const err = newError(403, "You cannot review your own spot",[
+        "You cannot review your own spot"
+    ]);
+    return next(err);
+    }  
     
     const newReview= await Review.create({
         review,

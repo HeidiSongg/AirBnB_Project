@@ -16,22 +16,22 @@ const ReviewDetail = ( reviews ) => {
         reviewsArr = Object.values(reviewsObj);
     }
 
-    const { reviewId } = useParams();
-
-
     useEffect(() => {
-        dispatch(loadReviewsbyMe())
-            .then(res => setIsLoaded(true));
+            dispatch(loadReviewsbyMe())
+                .then(res => setIsLoaded(true));
     }, [dispatch]);
+    
+
 
     return (
-       isLoaded && (
-        <section> Review List
-        <div>{reviewsArr.map(review => (
-            <ReviewCard key={review.id} review = {review}></ReviewCard>
-        ))}</div>
-        </section>
-       ) 
+            isLoaded && (
+                <section> Review List
+                <div>{reviewsArr.map(review => (
+                    <ReviewCard key={review.id} review = {review}></ReviewCard>
+                ))}</div>
+                </section>
+        
+       )
     )
 }
 

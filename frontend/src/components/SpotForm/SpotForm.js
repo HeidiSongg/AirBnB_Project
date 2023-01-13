@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { postSpot } from '../../store/spots';
 
 const SpotForm = () => {
+    const [errors, setErrors] = useState([]);
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -31,6 +32,8 @@ const SpotForm = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
+        setErrors([]);
+
         const payload = {
             address,
             city,
@@ -53,10 +56,22 @@ const SpotForm = () => {
         .then(()=> setName(''))
         .then(()=> setDescription(''))
         .then(()=> setPrice(''))
+        .catch(async res => {
+            const data = await res.json();
+            console.log(data)
+            if (data.erros) setErrors(data.errors);
+        })
+    
     }
 
     return sessionUser.id ? (
-        <section> Spot Form
+        
+        <section> 
+              {errors.length > 0 && errors.map((error, i) => {
+                <div key={i}>{error}</div>
+              })}
+            <div>
+            Spot Form
             <form className="create-spot-form" onSubmit = {submitHandler}>
                 <div>
                     <label>Address:</label>
@@ -137,12 +152,14 @@ const SpotForm = () => {
                     type = "number"
                     value = {price}
                     required
+                    min = "1"
                     onChange={updatePrice}
                  />                           
                 </div> 
                 <button>Submit</button>
             </form>
-        </section>
+            </div>  
+        </section>  
     ) :
     null;
 }

@@ -59,9 +59,9 @@ export const postSpot = (spot) => async (dispatch) =>{
 
 	if (res.ok) {
 		const spot = await res.json();
-		dispatch(addSpot(spot));
+		return dispatch(addSpot(spot));
 	}
-
+	return res
 }
 
 export const deleteSpot = (spotId) => async (dispatch) => {

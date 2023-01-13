@@ -18,6 +18,9 @@ const ReviewsList = (spots) => {
     if(reviewsObj){
         reviewsArr = Object.values(reviewsObj);
     }
+    const reviewSpotArr = reviewsArr.filter(review => (
+        review.spotId == spotId
+    ))
 
     useEffect(() => {
         dispatch(loadAllReviews(spotId))
@@ -26,7 +29,7 @@ const ReviewsList = (spots) => {
 
     return (
         <section> Review List
-        <div>{reviewsArr.map(review => (
+        <div>{reviewSpotArr.map(review => (
             <ReviewCard key={review.id} review={review}></ReviewCard>            
         ))}</div>
         </section>

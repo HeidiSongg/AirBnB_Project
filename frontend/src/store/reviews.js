@@ -54,9 +54,9 @@ export const postReview = (review, spotId) => async (dispatch) =>{
 
 	if (res.ok) {
 		const review = await res.json();
-        console.log(review)
-		dispatch(addReview(review));
+		return dispatch(addReview(review));
 	}
+	return res
 }
 
 export const deleteReview = (reviewId) => async (dispatch) => {
@@ -76,7 +76,6 @@ const reviewsReducer = (state = initialState, action) => {
 	let newState
 	switch (action.type) {
 		case LOAD_REVIEWS:
-			console.log(action.spotId)
 			newState = {...state}
 			action.spotId.Reviews.forEach(review => {
 				newState[review.id] = review
@@ -92,6 +91,7 @@ const reviewsReducer = (state = initialState, action) => {
 							
 		case ADD_REVIEW:
 			newState = {...state}
+			console.log(newState)
 			newState[action.review.id] = action.review;
 			return newState;
 		

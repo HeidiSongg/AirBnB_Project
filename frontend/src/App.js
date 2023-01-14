@@ -12,6 +12,7 @@ import EditSpotForm from "./components/EditSpotForm/EditSpotForm"
 import ReviewForm from "./components/ReviewForm/ReviewForm";
 import ReviewsList from "./components/ReviewsList/ReviewsList";
 import ReviewDetail from "./components/ReviewDetails/ReviewDetails";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <Footer />
       {isLoaded && (
         <Switch>
           <Route path="/login">
@@ -49,6 +51,7 @@ function App() {
             <ReviewDetail />
           </Route>
         </Switch>
+       
       )}
     </>
   );

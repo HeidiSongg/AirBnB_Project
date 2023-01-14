@@ -32,10 +32,7 @@ const SpotDetail = () => {
         <form className="spot-detail-form">
             <div><h4>{spot.name}</h4></div>
             <div>{spot.city}, {spot.state}, {spot.country}</div>
-            {/* <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"></img> */}
-            <div><img className="spot-image" src="https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"></img></div>
-            {/* <div> <img src=""/></div>
-            <div className="spot-image">{spot.previewImage}</div> */}
+            <div><img className="spot-image" src={spot.previewImage}></img></div>
             <div>Address: {spot.address}</div> 
             <div>Lat & Lng: {spot.lat}, {spot.lng}</div>
             <div>Description: {spot.description}</div>

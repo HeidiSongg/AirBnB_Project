@@ -19,7 +19,7 @@ const SpotsList = (spots) => {
     return (
         <section> 
             <h1>Find your perfect getaway!</h1>
-        <div>{spotsArr.map(spot => (
+        <div className = "spot-list-arrange">{spotsArr.map(spot => (
             <SpotCard key={spot.id} spot={spot}></SpotCard>
         ))}</div>
         </section>

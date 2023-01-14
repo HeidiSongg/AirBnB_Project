@@ -11,9 +11,10 @@ body {
 .spot-card{
     border: 1px solid;
     position: relative;
+    overflow: hidden;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 520px;
+    width: 350px;
     height: 350px;
     background: white;
     border-radius: 10px;
@@ -22,4 +23,12 @@ body {
 .spot-name{
     font-weight: bold;
     font-size: large;
+}
+
+.spot-card-preview-image {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 310px;
+  margin: 20px;
 }

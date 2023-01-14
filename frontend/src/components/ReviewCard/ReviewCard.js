@@ -13,11 +13,13 @@ const ReviewCard = ({review}) => {
     }
 
     return (
+        <form className = "review-form">
         <div className="review-card">        
-            <div>{review.review}</div>
-            <div>{review.stars}</div>
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
+            <div>Review: {review.review}</div>
+            <div>Stars: {review.stars}</div>
+            {isOwner && <button className="review-delete-button" onClick={deleteHandler}>Delete</button>}
         </div>
+        </form>
         
     )
 }

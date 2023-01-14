@@ -73,7 +73,7 @@ const SpotForm = () => {
             })}
             </div>
             <form className="create-spot-form" onSubmit = {submitHandler}>
-            <h4>Airbnb your home!</h4> 
+            <h2>Airbnb your home!</h2> 
                 <div>
                 <label>Address:</label>
                 <input

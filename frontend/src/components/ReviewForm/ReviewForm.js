@@ -47,13 +47,13 @@ const ReviewForm = () => {
 
     return sessionUser.id ? (
         <div>
-            <div>
+            <div className="error">
             {errors.length > 0 && errors.map((error) => {
                return <div>{error}</div>
             })}
             </div>
         <h4>Post a Review</h4>
-            <form onSubmit = {submitHandler}>
+            <form className ="review-form" onSubmit = {submitHandler}>
                 <div>
                     <label>Review:</label>
                 <input
@@ -74,7 +74,7 @@ const ReviewForm = () => {
                     onChange={updateStars}
                  /> 
                 </div>                
-                <button>Submit</button>
+                <button className="review-submit-button">Submit</button>
             </form>
         </div>
     ) :

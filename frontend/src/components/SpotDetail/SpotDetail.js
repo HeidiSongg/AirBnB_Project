@@ -23,20 +23,26 @@ const SpotDetail = () => {
     }, [dispatch]);
 
 
-    if (!spot && isLoaded) return <Redirect to='/spots' />
+    // if (!spot && isLoaded) return <Redirect to='/spots' />
+    if (!spot) return <Redirect to='/spots' />
     const isOwner = sessionUser.id === spot.ownerId;
-
+    console.log(spot)
     return (
         isLoaded && (
-        <div>
-            <div>{spot.name}</div>
-            <div>{spot.address}</div>
-            <div>{spot.description}</div>
-            <div>{spot.price}</div>
-            {isOwner &&<Link to={`/spots/${spot.id}/edit`}>Edit</Link>}
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
-            <button><Link to={`/spots/${spot.id}/reviews`}>Review</Link></button>
-        </div>
+        <form className="spot-detail-form">
+            <div><h4>{spot.name}</h4></div>
+            <div>{spot.city}, {spot.state}, {spot.country}</div>
+            <div className="spot-image">{spot.previewImage}</div>
+            <div>Address: {spot.address}</div> 
+            <div>Lat & Lng: {spot.lat}, {spot.lng}</div>
+            <div>Description: {spot.description}</div>
+            <div>$ {spot.price} night</div>
+            <Link to={`/spots/${spot.id}/reviews`}  className="review-link">Read the reviews</Link>
+            <div>
+                {isOwner &&<Link to={`/spots/${spot.id}/edit`} style={{ textDecoration: 'none' }}><button className="button">Edit</button></Link>}
+                {isOwner && <button onClick={deleteHandler} className="button">Delete</button>}
+            </div>
+        </form>
         )
     )    
 }

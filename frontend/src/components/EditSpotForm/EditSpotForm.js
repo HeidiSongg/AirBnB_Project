@@ -62,7 +62,8 @@ const EditSpotForm = () => {
   }
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className="create-spot-form" onSubmit={submitHandler}>
+      <h4>Edit</h4>
          <div>
                     <label>Address:</label>
                 <input
@@ -145,7 +146,7 @@ const EditSpotForm = () => {
                     onChange={updatePrice}
                  />                           
                 </div> 
-                <button>Submit</button>
+                <button className="button">Submit</button>
             </form>
   )
   }

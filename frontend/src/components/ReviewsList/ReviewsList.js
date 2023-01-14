@@ -28,7 +28,8 @@ const ReviewsList = (spots) => {
     }, [dispatch])
 
     return (
-        <section> Review List
+        <section> 
+            <h4>Review List</h4>
         <div>{reviewSpotArr.map(review => (
             <ReviewCard key={review.id} review={review}></ReviewCard>            
         ))}</div>

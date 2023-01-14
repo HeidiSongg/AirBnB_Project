@@ -1,19 +1,29 @@
-import './SpotForm.css';
+import { useParams,useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react'
-import { postSpot } from '../../store/spots';
+import { loadSingleSpot,changeSpot } from '../../store/spots';
+import { useEffect, useState } from 'react'
 
-const SpotForm = () => {
-    const [errors, setErrors] = useState([]);
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+const EditSpotForm = () => {
+    const { spotId } = useParams();
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+      dispatch(loadSingleSpot(spotId));
+    }, [dispatch, spotId]);
+
+    const spot = useSelector(state=>state.spots[spotId])
+
+    const [address, setAddress] = useState(spot.address);
+    const [city, setCity] = useState(spot.city);
+    const [state, setState] = useState(spot.state);
+    const [country, setCountry] = useState(spot.country);
+    const [lat, setLat] = useState(spot.lat);
+    const [lng, setLng] = useState(spot.lng);
+    const [name, setName] = useState(spot.name);
+    const [description, setDescription] = useState(spot.description);
+    const [price, setPrice] = useState(spot.price);
 
     const updateAddress = (e) => setAddress(e.target.value);
     const updateCity = (e) => setCity(e.target.value);
@@ -25,57 +35,37 @@ const SpotForm = () => {
     const updateDescription= (e) => setDescription(e.target.value);
     const updatePrice= (e) => setPrice(e.target.value);
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(loadSingleSpot(spotId));
+    }, [dispatch]);
 
-    const sessionUser = useSelector(state => state.session.user);
+    const submitHandler = (e) => {
+      e.preventDefault();
 
-    const submitHandler = async (e) => {
-        e.preventDefault();
+      const payload = {
+          spotId,
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+          name,
+          description,
+          price
+      }
+      
+    dispatch(changeSpot(payload))
+    .then(()=> {
+      history.push(`/spots/${spotId}`)
+    })
+  }
 
-        setErrors([]);
-
-        const payload = {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price
-        }
-        
-        if(errors.length === 0) {
-            dispatch(postSpot(payload))
-            .then(()=> setAddress(''))
-            .then(()=> setCity(''))
-            .then(()=> setState(''))
-            .then(()=> setCountry(''))
-            .then(()=> setLat(''))
-            .then(()=> setLng(''))
-            .then(()=> setName(''))
-            .then(()=> setDescription(''))
-            .then(()=> setPrice(''))
-            .catch(async res => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-        })
-        }
-    
-    }
-
-    return sessionUser.id ? (
-        <div>
-            <div>
-            {errors.length > 0 && errors.map((error) => {
-               return <div>{error}</div>
-            })}
-            </div>
-            <form className="create-spot-form" onSubmit = {submitHandler}>
-            <h2>Airbnb your home!</h2> 
-                <div>
-                <label>Address:</label>
+  return (
+    <form className="create-spot-form" onSubmit={submitHandler}>
+      <h4>Edit</h4>
+         <div>
+                    <label>Address:</label>
                 <input
                     type = "text"
                     value = {address}
@@ -153,15 +143,12 @@ const SpotForm = () => {
                     type = "number"
                     value = {price}
                     required
-                    min = "1"
                     onChange={updatePrice}
                  />                           
-                </div>
-                <button className="button">Submit</button> 
+                </div> 
+                <button className="button">Submit</button>
             </form>
-        </div>
-    ) :
-    null;
-}
-
-export default SpotForm;
+  )
+  }
+  
+  export default EditSpotForm;

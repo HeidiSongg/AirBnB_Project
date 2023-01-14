@@ -1,29 +1,24 @@
 import './SpotCard.css';
 import { useSelector, useDispatch } from "react-redux"
-import { deleteSpot, loadSingleSpot } from '../../store/spots';
+import { loadSingleSpot } from '../../store/spots';
 import { Link } from 'react-router-dom';
 
 const SpotCard = ({spot}) => {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user);
     
-    const isOwner = sessionUser.id === spot.ownerId;
-
-    const deleteHandler = () => {
-        dispatch(deleteSpot(spot.id))
-    }
 
     const getDetailsHandler = () => {
         dispatch(loadSingleSpot(spot.id))
     }
-
+    console.log(spot)
     return (
         <div className="spot-card">
             <Link to={`/spots/${spot.id}`} onClick ={getDetailsHandler}>
-            <div>{spot.name}</div>
+            <div className="spot-name">{spot.name}</div>
             </Link>
-            <div>{spot.address}</div>
-            {isOwner && <button onClick={deleteHandler}>Delete</button>}
+            <div>{spot.city}, {spot.state}, {spot.country}</div>
+            <div>$ {spot.price} night</div>
         </div>
         
     )

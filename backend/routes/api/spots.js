@@ -4,8 +4,10 @@ const { Op } = require('sequelize');
 
 const { Spot, SpotImage, User, Review, ReviewImage, Booking } = require('../../db/models')
 const { requireAuth } = require("../../utils/auth")
+const { handleValidationErrors } = require("../../utils/validation")
 
 const newError = require('../../utils/newError.js');
+
 
 router.get('/', async (req, res) => {
     let {
@@ -118,6 +120,13 @@ router.post('/',requireAuth, async (req, res) => {
         ownerId: req.user.id
     })
     
+    if(newSpot.address.length > 250) {
+      const err = newError(404, "Character limit of 250",[
+          "Character limit of 250"
+      ]);
+      return next(err);
+    }
+
     return res.json(newSpot)
   })
 
@@ -146,7 +155,7 @@ router.post('/:spotId/images',requireAuth, async (req, res, next) => {
   })
 
 //Edit a Spot
-router.put('/:spotId',requireAuth, async (req, res, next) => {
+router.put('/:spotId/edit',requireAuth, async (req, res, next) => {
 
     const spotId = req.params.spotId;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -239,6 +248,12 @@ router.post('/:spotId/reviews',requireAuth, async (req, res, next) => {
         return next(err);
       }
 
+    if(req.user.id === spot.ownerId){
+        const err = newError(403, "You cannot review your own spot",[
+          "You cannot review your own spot"
+      ]);
+      return next(err);
+      }    
     const existinguserReview = await Review.findOne({ where: {userId: req.user.id}});  
     
     if(existinguserReview) {
@@ -247,7 +262,7 @@ router.post('/:spotId/reviews',requireAuth, async (req, res, next) => {
         ]);
         return next(err);
       }
-    
+        
     const newReview= await Review.create({
         review,
         stars,

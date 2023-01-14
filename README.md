@@ -529,7 +529,7 @@ Updates and returns an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: PUT
-  * URL: /spots/:spotId
+  * URL: /spots/:spotId/edit
   * Headers:
     * Content-Type: application/json
   * Body:

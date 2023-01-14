@@ -17,7 +17,8 @@ const SpotsList = (spots) => {
     }, [dispatch])
 
     return (
-        <section> Spot List
+        <section> 
+            <h1>Find your perfect getaway!</h1>
         <div>{spotsArr.map(spot => (
             <SpotCard key={spot.id} spot={spot}></SpotCard>
         ))}</div>

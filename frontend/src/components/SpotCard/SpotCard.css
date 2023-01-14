@@ -1,3 +1,25 @@
+/* html {
+    display: grid;
+    min-height: 100%;
+  } */
+
+body {
+    font-family: "Courier New", sans-serif;
+    text-transform: uppercase;
+  }
+
 .spot-card{
-    border: 2px solid black 
+    border: 1px solid;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 520px;
+    height: 350px;
+    background: white;
+    border-radius: 10px;
+}
+
+.spot-name{
+    font-weight: bold;
+    font-size: large;
 }

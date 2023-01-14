@@ -29,7 +29,7 @@ const SpotForm = () => {
 
     const sessionUser = useSelector(state => state.session.user);
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         setErrors([]);
@@ -46,35 +46,36 @@ const SpotForm = () => {
             price
         }
         
-        dispatch(postSpot(payload))
-        .then(()=> setAddress(''))
-        .then(()=> setCity(''))
-        .then(()=> setState(''))
-        .then(()=> setCountry(''))
-        .then(()=> setLat(''))
-        .then(()=> setLng(''))
-        .then(()=> setName(''))
-        .then(()=> setDescription(''))
-        .then(()=> setPrice(''))
-        .catch(async res => {
-            const data = await res.json();
-            console.log(data)
-            if (data.erros) setErrors(data.errors);
+        if(errors.length === 0) {
+            dispatch(postSpot(payload))
+            .then(()=> setAddress(''))
+            .then(()=> setCity(''))
+            .then(()=> setState(''))
+            .then(()=> setCountry(''))
+            .then(()=> setLat(''))
+            .then(()=> setLng(''))
+            .then(()=> setName(''))
+            .then(()=> setDescription(''))
+            .then(()=> setPrice(''))
+            .catch(async res => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
         })
+        }
     
     }
 
     return sessionUser.id ? (
-        
-        <section> 
-              {errors.length > 0 && errors.map((error, i) => {
-                <div key={i}>{error}</div>
-              })}
+        <div>
             <div>
-            Spot Form
+            {errors.length > 0 && errors.map((error) => {
+               return <div>{error}</div>
+            })}
+            </div>
             <form className="create-spot-form" onSubmit = {submitHandler}>
+            <h4>Airbnb your home!</h4> 
                 <div>
-                    <label>Address:</label>
+                <label>Address:</label>
                 <input
                     type = "text"
                     value = {address}
@@ -155,11 +156,10 @@ const SpotForm = () => {
                     min = "1"
                     onChange={updatePrice}
                  />                           
-                </div> 
-                <button>Submit</button>
+                </div>
+                <button className="button">Submit</button> 
             </form>
-            </div>  
-        </section>  
+        </div>
     ) :
     null;
 }

@@ -38,8 +38,8 @@ function App() {
             <EditSpotForm />
           </Route>
           <Route exact path ='/spots'>
-            <SpotForm />
             <SpotsList />
+            <SpotForm />
           </Route>
           <Route exact path ='/spots/:spotId/reviews'>
             <ReviewsList />

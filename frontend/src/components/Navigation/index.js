@@ -14,32 +14,33 @@ function Navigation({ isLoaded }){
       <nav className="navbar_user">
       <ProfileButton user={sessionUser.id} />
       </nav>
-      <li>
-        <NavLink to="/spots">Spots</NavLink>
-      </li>
+      <div>
+        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none' }}>Vacation Homes</NavLink>
+      </div>
       </>
     );
   } else {
     sessionLinks = (
       <>
       <nav className="navbar_user">
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
+        <div>
+          <button className="button_auth"><NavLink to="/login" style={{ textDecoration: 'none' }}>Log In</NavLink></button>
+        &nbsp;
+          <button className="button_auth"><NavLink to="/signup" style={{ textDecoration: 'none' }}>Sign Up</NavLink></button>
+        </div>
       </nav>
-      <li>
-        <NavLink to="/spots">Spots</NavLink>
-      </li>
+      <div>
+        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none' }}>Vacation Homes</NavLink>
+      </div>
       </>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <div>
+      <NavLink exact to="/" className="home" style={{ textDecoration: 'none'}}><i class='fab fa-airbnb fa-2x'></i></NavLink><br/>
         {isLoaded && sessionLinks}
-      </li>
-    </ul>
+    </div>
   );
 }
 

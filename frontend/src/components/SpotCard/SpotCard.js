@@ -11,13 +11,14 @@ const SpotCard = ({spot}) => {
     const getDetailsHandler = () => {
         dispatch(loadSingleSpot(spot.id))
     }
-
+    console.log(spot)
     return (
         <div className="spot-card">
             <Link to={`/spots/${spot.id}`} onClick ={getDetailsHandler}>
-            <div>{spot.name}</div>
+            <div className="spot-name">{spot.name}</div>
             </Link>
             <div>{spot.city}, {spot.state}, {spot.country}</div>
+            <div>$ {spot.price} night</div>
         </div>
         
     )

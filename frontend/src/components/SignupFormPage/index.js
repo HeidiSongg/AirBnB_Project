@@ -31,10 +31,11 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className ="signupform" onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
+      <h2>Welcome to Airbnb</h2>
       <label>
         First Name
         <input
@@ -89,7 +90,7 @@ function SignupFormPage() {
           required
         />
       </label>
-      <button type="submit">Sign Up</button>
+      <button className="button" type="submit">Sign Up</button>
     </form>
   );
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
+  const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   
@@ -35,10 +36,10 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
+          <li>{sessionUser.username}</li>
+          <li>{sessionUser.email}</li>
           <li>
-            <button onClick={logout}>Log Out</button>
+            <button className="button_auth" onClick={logout}>Log Out</button>
           </li>
         </ul>
       )}

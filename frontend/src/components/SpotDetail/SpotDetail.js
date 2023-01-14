@@ -37,7 +37,8 @@ const SpotDetail = () => {
             <div>Lat & Lng: {spot.lat}, {spot.lng}</div>
             <div>Description: {spot.description}</div>
             <div>$ {spot.price} night</div>
-            <Link to={`/spots/${spot.id}/reviews`}  className="review-link">Read the reviews</Link>
+            <br></br>
+            <Link to={`/spots/${spot.id}/reviews`}  className="review-link" style={{ textDecoration: 'none', color: '#6E6D70' }}>Read the reviews <i class="fa-solid fa-comments"></i></Link>
             <div>
                 {isOwner &&<Link to={`/spots/${spot.id}/edit`} style={{ textDecoration: 'none' }}><button className="button">Edit</button></Link>}
                 {isOwner && <button onClick={deleteHandler} className="button">Delete</button>}

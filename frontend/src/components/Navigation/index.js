@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import ReviewDetail from '../ReviewDetails/ReviewDetails';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -15,7 +16,7 @@ function Navigation({ isLoaded }){
       <ProfileButton user={sessionUser.id} />
       </nav>
       <div>
-        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none' }}>Vacation Homes</NavLink>
+        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none', color: '#6E6D70'}}>Vacation Homes</NavLink>
       </div>
       </>
     );
@@ -24,13 +25,13 @@ function Navigation({ isLoaded }){
       <>
       <nav className="navbar_user">
         <div>
-          <button className="button_auth"><NavLink to="/login" style={{ textDecoration: 'none' }}>Log In</NavLink></button>
+          <button className="button_auth"><NavLink to="/login" style={{ textDecoration: 'none', color: 'white' }}>Log In</NavLink></button>
         &nbsp;
-          <button className="button_auth"><NavLink to="/signup" style={{ textDecoration: 'none' }}>Sign Up</NavLink></button>
+          <button className="button_auth"><NavLink to="/signup" style={{ textDecoration: 'none', color: 'white' }}>Sign Up</NavLink></button>
         </div>
       </nav>
       <div>
-        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none' }}>Vacation Homes</NavLink>
+        <NavLink to="/spots" className="spot" style={{ textDecoration: 'none', color: '#6E6D70'}}>Vacation Homes</NavLink>
       </div>
       </>
     );
@@ -38,7 +39,7 @@ function Navigation({ isLoaded }){
 
   return (
     <div>
-      <NavLink exact to="/" className="home" style={{ textDecoration: 'none'}}><i class='fab fa-airbnb fa-2x'></i></NavLink><br/>
+      <NavLink exact to="/" className="home" style={{ color: '#FF5A5F'}}><i class='fab fa-airbnb fa-2x'></i></NavLink><br/>
         {isLoaded && sessionLinks}
     </div>
   );

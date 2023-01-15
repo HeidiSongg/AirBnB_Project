@@ -19,6 +19,18 @@ const reviews = [
     spotId: 1,
     review: "horrible! do not book here",
     stars: 1,
+  },
+  {
+    userId: 3,
+    spotId: 2,
+    review: "The view was amazing and host was very responsive",
+    stars: 5,
+  },
+  {
+    userId: 1,
+    spotId: 3,
+    review: "Very spacious place with plenty of amenities. Highly recommend!",
+    stars: 5,
   }
 ]
 

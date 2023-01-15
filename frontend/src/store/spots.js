@@ -46,6 +46,9 @@ export const loadSingleSpot = (spotId) => async (dispatch) => {
 
 	if (res.ok) {
 		const spot = await res.json();
+		console.log(spot)
+		console.log(spot.avgStarRating)
+		console.log(spot.numReviews)
 		return dispatch(loadOneSpot(spot))
 	}
 }
@@ -103,6 +106,7 @@ const spotsReducer = (state = initialState, action) => {
 
 		case LOAD_SPOT:
 			newState = {...state}
+			newState[action.spot.id] = action.spot;
 			return newState
 					
 		case ADD_SPOT:

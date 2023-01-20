@@ -23,6 +23,7 @@ function App() {
 
   return (
     <>
+    
       <Navigation isLoaded={isLoaded} />
       <Footer />
       {isLoaded && (

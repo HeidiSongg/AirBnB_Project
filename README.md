@@ -25,7 +25,7 @@ Clone of Airbnb with the key features
 - Leave a review
 - Delete a review
 
-## How tp setup the application from a fresh clone
+## How to setup the application from a fresh clone
 
 ### Install dependencies
 - run "npm install"
